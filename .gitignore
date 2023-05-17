@@ -1,0 +1,85 @@
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Linker output
+*.ilk
+*.map
+*.exp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# Kernel Module Compile Results
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# vs code config
+/.vscode/
+
+# pycache files
+*.pyc
+*.sav
+/venv/
+
+# generator stuff
+__pycache__/*
+*.csv
+*generated
+
+/build/*
+/base/*
+/narc/*
+*.nds
+*.xmap
+
+# ghidra stuff
+/platinum.gpr
+/platinum.lock
+/platinum.lock~
+/platinum.rep/
+
+/offsets.ini
+/buildsys/rom_gen.ld
+/armips/asm/offset.s
+/tools/armips
+/tools/armips.exe
+/tools/ndstool
+/tools/ndstool.exe
