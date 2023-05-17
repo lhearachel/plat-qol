@@ -104,7 +104,7 @@ all: generate_output
 	@echo " ==== Starting code injection... ===== "
 
 	$(PYTHON) scripts/make.py
-	# $(ARMIPS) armips/global.s
+	$(ARMIPS) armips/global.s
 	
 	@echo " =========== Making ROM... =========== "
 	$(NDSTOOL) -c $(BUILDROM) -9 $(BASE)/arm9.bin -7 $(BASE)/arm7.bin -y9 $(BASE)/y9.bin -y $(BASE)/y7.bin -d $(FILESYS) -y $(BASE)/overlay -t $(BASE)/banner.bin -h $(BASE)/header.bin
