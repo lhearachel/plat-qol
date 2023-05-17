@@ -10,13 +10,19 @@
 # This will open up the arm9 binary, jump to the offset that would be in memory at 0x020CA054,
 # and overwrite a string of 4 bytes with 60 00 C0 46.
 
+#include "include/config.h"
+
 # == Infinite TMs
 # ==== Don't reduce TM quantity on use
+#ifdef UNLIMITED_TMS
 arm9 080865EA 07 E0
 
 # ==== Don't show item quantity on TMs in the bag
 0084 08004372 00 00 00 00
+#endif
 
 
 # == Speed up HP bars (by 4x)
+#ifdef FASTER_HP_BAR_DRAIN
 0016 0802D046 48 1F
+#endif

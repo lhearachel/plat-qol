@@ -1,3 +1,7 @@
+#include "config.h"
+
+#ifdef DETAILED_SUMMARY_SCREEN
+
 #include "typedefs.h"
 
 #include "ui/summary.h"
@@ -140,3 +144,5 @@ void Summary_ChangeStatScreenState(struct SummaryState *summary, u8 mode)
 
     UpdatePokemonData(summary, 0);      // Recover old data for page change
 }
+
+#endif // DETAILED_SUMMARY_SCREEN
