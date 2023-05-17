@@ -1,10 +1,22 @@
-# bytereplacement specifies the overlay, offset, and bytes you want to write there:
+# Entries in this file will overwrite existing bytes within a file explicitly. For example:
 #
 #   0012 0801F738 60 B4 C0 46
 #
-# opens up overlay 12, jumps to the file offset 0x1F738, and writes 60 B4 C0 46 there
+# This will open up overlay 12, jump to the file offset 0x01F738, and overwrite a string of
+# of 4 bytes with 60 B4 C0 46.
 #
 #   arm9 020CA054 60 00 2D E9
 #
-# opens up the arm9, jumps to the offset that would be in memory at 020CA054, and writes 60 00 2D E9 there
+# This will open up the arm9 binary, jump to the offset that would be in memory at 0x020CA054,
+# and overwrite a string of 4 bytes with 60 00 C0 46.
 
+# == Infinite TMs
+# ==== Don't reduce TM quantity on use
+arm9 080865EA 07 E0
+
+# ==== Don't show item quantity on TMs in the bag
+0084 08004372 00 00 00 00
+
+
+# == Speed up HP bars (by 4x)
+0016 0802D046 48 1F

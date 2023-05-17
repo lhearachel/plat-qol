@@ -28,7 +28,7 @@ Press **R** to change to IVs, **L** to change to EVs, and **SELECT** to change t
 <summary>- Unlimited TMs</summary>
 <br>
 
-![](previews/infinite_tms.png)
+![infinite tms](previews/infinite_tms.png)
 </details>
 <details>
 <summary>- HM Usage Based on Possession</summary>
@@ -54,7 +54,7 @@ Press **B** to toggle auto-run on and off.
 <summary>- Faster HP Bar Drain</summary>
 <br>
 
-![](previews/hp_bar.gif)
+![increased hp bar speed](previews/hp_bar.gif)
 </details>
 
 ## Setup Instructions
