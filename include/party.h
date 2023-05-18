@@ -15,8 +15,10 @@ struct PartyData {
     void *items;
     void *mail;
     void *config;
-    u8   padding_x10[3];
-    void *fieldState;
+    void *tv;
+    void *rules;
+    void *scwk;
+    struct FieldState *fieldState;
 
     // and more
 };

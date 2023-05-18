@@ -34,6 +34,10 @@ Press **R** to change to IVs, **L** to change to EVs, and **SELECT** to change t
 <summary>- HM Usage Based on Possession</summary>
 <br>
 
+Cut, Rock Smash, Strength, Surf, Rock Climb, and Waterfall are all usable via overworld interaction events.
+
+Fly and Defog will appear on the move selection screen for any Pokemon that can learn them.
+
 ![HMs usable without knowing the move](previews/usable_hms.gif)
 </details>
 <details>

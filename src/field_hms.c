@@ -14,11 +14,17 @@
 
 #include "ui/party_list.h"
 
+#include "constants/items.h"
 #include "constants/moves.h"
 #include "constants/scripts.h"
 
 #define HEAP_ID_WORLD   0
-#define HM03_SURF       422
+
+static inline BOOL PlayerHasHMAndBadge(void *saveData, int hmItemID, int badge)
+{
+    return PlayerStatus_CheckBadge(SaveData_GetPlayerStatus(saveData), badge)
+            && PlayerItems_HaveAtLeast(SaveData_GetPlayerItems(saveData), hmItemID, 1, HEAP_ID_WORLD);
+}
 
 u16 ScriptCheck_TalkToTile(struct FieldState *fieldState, u8 nextTile)
 {
@@ -60,28 +66,33 @@ u16 ScriptCheck_TalkToTile(struct FieldState *fieldState, u8 nextTile)
     
     // Here's where the actually-modified code starts
     if (Player_Form(fieldState->playerState) != PLAYER_FORM_SWIMMING) {
-        struct PlayerStatus *playerStatus = SaveData_GetPlayerStatus(fieldState->saveData);
+        // struct PlayerStatus *playerStatus = SaveData_GetPlayerStatus(fieldState->saveData);
         u32 currTile = Player_CalcCurrentMapAttributes(fieldState->playerState);
 
         if (Player_CanSurfFromHere(fieldState->playerState, currTile, nextTile)
-                && PlayerStatus_CheckBadge(playerStatus, BADGE_PASTORIA)) {
-            if (PlayerItems_HaveAtLeast(SaveData_GetPlayerItems(fieldState->saveData), HM03_SURF, 1, HEAP_ID_WORLD) != 0) {
-                return SCRIPT_SURF;
-            }
+                && PlayerHasHMAndBadge(fieldState->saveData, ITEM_HM03, BADGE_PASTORIA)) {
+            return SCRIPT_SURF;
         }
+        // if (Player_CanSurfFromHere(fieldState->playerState, currTile, nextTile)
+        //         && PlayerStatus_CheckBadge(playerStatus, BADGE_PASTORIA)) {
+        //     if (PlayerItems_HaveAtLeast(SaveData_GetPlayerItems(fieldState->saveData), HM03_SURF, 1, HEAP_ID_WORLD) != 0) {
+        //         return SCRIPT_SURF;
+        //     }
+        // }
     }
 
     return 0xFFFF;
 }
 
-struct HMListPriority {
+struct HMListData {
     u16 move;
-    u16 hmNum;      // zero-indexed
+    u16 hmNum;  // 0 indexed
+    u16 badge;
 };
 
-static struct HMListPriority sHMList[] = {
-    { MOVE_FLY,        1 },
-    { MOVE_DEFOG,      4 },
+static struct HMListData sHMList[] = {
+    { MOVE_FLY,        1,   BADGE_VEILSTONE },
+    { MOVE_DEFOG,      4,   BADGE_HEARTHOME },
     // Don't show the other HMs since they're just usable via scripts in the overworld
 };
 
@@ -101,7 +112,8 @@ u8 PartyList_MakeFieldMoveMenu(struct PartyList *partyList, u8 *menuParams)
             u32 species = Pokemon_Get(pokemon, MON_PARAM_SPECIES,     NULL);
             u32 form    = Pokemon_Get(pokemon, MON_PARAM_FORM_NUMBER, NULL);
             for (int i = 0; i < 2 && fieldMoves < 4; i++) {
-                if (Pokemon_CanLearnTM(species, form, 92 + sHMList[i].hmNum)) {
+                if (PlayerHasHMAndBadge(partyList->partyData->fieldState->saveData, ITEM_HM01 + sHMList[i].hmNum, sHMList[i].badge)
+                        && Pokemon_CanLearnTM(species, form, 92 + sHMList[i].hmNum)) {
                     u16 move = sHMList[i].move;
                     u8 menuID = PartyList_CalcMenuIDForMove(move);
                     if (menuID != 0xFF) {
