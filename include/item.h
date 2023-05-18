@@ -3,6 +3,8 @@
 
 #include "typedefs.h"
 
+#include "save.h"
+
 /**
  * @brief Checks if a given item is mail.
  * 
@@ -20,6 +22,6 @@ BOOL __attribute__((long_call)) Item_IsMail(u16 itemID);
  * @param[in] heapID    Heap ID for extra memory allocation.
  * @return              TRUE if the player has the requisite amount of the item, FALSE otherwise.
  */
-BOOL __attribute__((long_call)) Items_HaveAtLeast(void *items, u16 itemID, u16 quantity, u32 heap);
+BOOL __attribute__((long_call)) PlayerItems_HaveAtLeast(struct PlayerItems *items, u16 itemID, u16 quantity, u32 heap);
 
 #endif

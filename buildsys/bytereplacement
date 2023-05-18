@@ -13,11 +13,11 @@
 #include "include/config.h"
 
 # == Infinite TMs
-# ==== Don't reduce TM quantity on use
 #ifdef UNLIMITED_TMS
+# Don't reduce TM quantity on use
 arm9 080865EA 07 E0
 
-# ==== Don't show item quantity on TMs in the bag
+# Don't show item quantity on TMs in the bag
 0084 08004372 00 00 00 00
 #endif
 
@@ -25,4 +25,23 @@ arm9 080865EA 07 E0
 # == Speed up HP bars (by 4x)
 #ifdef FASTER_HP_BAR_DRAIN
 0016 0802D046 48 1F
+#endif
+
+
+# == HMs usable based on item possession
+#ifdef FIELD_HMS
+# These two lines remove the cut-in animation from Rock Climb
+0005 021E07D6 C0 46 C0 46
+0005 021E07EA C0 46 01 20
+
+# This removes the cut-in animation from Surf
+0005 021E01A8 08 D0
+
+# This removes the cut-in animation from ascending a waterfall
+0005 021E0A2C C0 46 C0 46
+0005 021E0A4A C0 46 01 20
+
+# This removes the cut-in animation from descending a waterfall
+0005 021E0BFC C0 46 C0 46
+0005 021E0C16 C0 46 01 20
 #endif

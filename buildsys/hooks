@@ -30,7 +30,13 @@ arm9 Summary_Entry_Hook 08090A3A 1
 #endif
 
 #ifdef FIELD_HMS
+# This makes the field move menu always show Fly and Defog if the mons can learn them
+# and the player has the requisite HM
 arm9 PartyList_MakeFieldMoveMenu 080800B4 2
+
+# This rewrites the whole routine to make some modifications to how Surf's legality
+# is checked
+0005 ScriptCheck_TalkToTile 021D271C 2
 #endif
 
 #ifdef MAP_B_TO_RUN_FROM_BATTLES

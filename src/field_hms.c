@@ -10,35 +10,69 @@
 #include "player.h"
 #include "pokemon.h"
 #include "save.h"
+#include "tile.h"
 
 #include "ui/party_list.h"
 
 #include "constants/moves.h"
+#include "constants/scripts.h"
 
 #define HEAP_ID_WORLD   0
-
 #define HM03_SURF       422
 
-#define SCRIPT_ID_SURF_PROMPT 10004
-
-// This needs an update to the Surfing script (Script 5 in file 409)
-// Gotta figure out how to piece that into the build before building the hook
-#if 0
-u16 FieldHMs_Surf(struct FieldState *fieldState, u8 nextAttr)
+u16 ScriptCheck_TalkToTile(struct FieldState *fieldState, u8 nextTile)
 {
-    if (Player_Form(fieldState->playerState) != 2) {        // Player is not swimming
-        void *flags = SaveData_GetFlags(fieldState->saveData);
-        u32 currAttr = Player_CalcCurrentMapAttributes(fieldState->playerState);
-        if (Player_CanSurfFromHere(fieldState->playerState, currAttr, nextAttr) && Flags_CheckBadge(flags, 3)) {
-            if (Items_HaveAtLeast(SaveData_GetItems(fieldState->saveData), HM03_SURF, 1, HEAP_ID_WORLD) != 0) {
-                return SCRIPT_ID_SURF_PROMPT;
+    // Most of this is just reinventing the wheel from the original function
+    // which kinda sucks, but w/e.
+    int playerDirection = Player_Direction(fieldState->playerState);
+
+    if (Tile_IsPC(nextTile) && playerDirection == PLAYER_DIR_UP) {
+        return SCRIPT_TURN_ON_PC;
+    } else if (Tile_IsSmallBookshelf_01(nextTile)) {
+        return SCRIPT_SMALL_BOOKSHELF_01;
+    } else if (Tile_IsSmallBookshelf_02(nextTile)) {
+        return SCRIPT_SMALL_BOOKSHELF_02;
+    } else if (Tile_IsBookshelf_01(nextTile)) {
+        return SCRIPT_BOOKSHELF_01;
+    } else if (Tile_IsBookshelf_02(nextTile)) {
+        return SCRIPT_BOOKSHELF_02;
+    } else if (Tile_IsTrashcan(nextTile)) {
+        return SCRIPT_TRASHCAN;
+    } else if (Tile_IsShopBookshelf_01(nextTile)) {
+        return SCRIPT_SHOP_BOOKSHELF_01;
+    } else if (Tile_IsShopBookshelf_02(nextTile)) {
+        return SCRIPT_SHOP_BOOKSHELF_02;
+    } else if (Tile_IsShopBookshelf_03(nextTile)) {
+        return SCRIPT_SHOP_BOOKSHELF_03;
+    } else if (Tile_IsWaterfall(nextTile)) {
+        return SCRIPT_WATERFALL;
+    } else if (Tile_IsMap(nextTile)) {
+        return SCRIPT_TOWNMAP;
+    } else if (Tile_IsBumpPost(nextTile)) {
+        return SCRIPT_BUMP_POST;
+    } else if (Tile_IsTV(nextTile) && playerDirection == PLAYER_DIR_UP) {
+        return SCRIPT_TV;
+    }
+
+    if (Player_CanRockClimbFromHere(nextTile, playerDirection)) {
+        return SCRIPT_ROCK_CLIMB;
+    }
+    
+    // Here's where the actually-modified code starts
+    if (Player_Form(fieldState->playerState) != PLAYER_FORM_SWIMMING) {
+        struct PlayerStatus *playerStatus = SaveData_GetPlayerStatus(fieldState->saveData);
+        u32 currTile = Player_CalcCurrentMapAttributes(fieldState->playerState);
+
+        if (Player_CanSurfFromHere(fieldState->playerState, currTile, nextTile)
+                && PlayerStatus_CheckBadge(playerStatus, BADGE_PASTORIA)) {
+            if (PlayerItems_HaveAtLeast(SaveData_GetPlayerItems(fieldState->saveData), HM03_SURF, 1, HEAP_ID_WORLD) != 0) {
+                return SCRIPT_SURF;
             }
         }
     }
 
-    return (u16) ~0;
+    return 0xFFFF;
 }
-#endif
 
 struct HMListPriority {
     u16 move;
@@ -48,12 +82,7 @@ struct HMListPriority {
 static struct HMListPriority sHMList[] = {
     { MOVE_FLY,        1 },
     { MOVE_DEFOG,      4 },
-    { MOVE_CUT,        0 },
-    { MOVE_SURF,       2 },
-    { MOVE_STRENGTH,   3 },
-    { MOVE_ROCK_SMASH, 5 },
-    { MOVE_WATERFALL,  6 },
-    { MOVE_ROCK_CLIMB, 7 },
+    // Don't show the other HMs since they're just usable via scripts in the overworld
 };
 
 // Sticking this here because idk where else to put it
@@ -71,7 +100,7 @@ u8 PartyList_MakeFieldMoveMenu(struct PartyList *partyList, u8 *menuParams)
         if (partyList->panels[partyList->selectedPosition].egg == 0) {
             u32 species = Pokemon_Get(pokemon, MON_PARAM_SPECIES,     NULL);
             u32 form    = Pokemon_Get(pokemon, MON_PARAM_FORM_NUMBER, NULL);
-            for (int i = 0; i < 8 && fieldMoves < 4; i++) {
+            for (int i = 0; i < 2 && fieldMoves < 4; i++) {
                 if (Pokemon_CanLearnTM(species, form, 92 + sHMList[i].hmNum)) {
                     u16 move = sHMList[i].move;
                     u8 menuID = PartyList_CalcMenuIDForMove(move);
