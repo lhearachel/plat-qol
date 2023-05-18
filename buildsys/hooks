@@ -24,5 +24,7 @@
 
 #include "include/config.h"
 
+#ifdef DETAILED_SUMMARY_SCREEN
 arm9 Summary_IVEV 0808CA20 1
 arm9 Summary_Entry_Hook 08090A3A 1
+#endif
