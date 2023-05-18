@@ -16,6 +16,8 @@ This repository is also structured to be extensible as a C injection template wi
 
 ## Features
 
+Each of these features is controlled by a flag defined in [this file](include/config.h). If there is any feature you do not want to include, then modify that file to exclude it.
+
 <details>
 <summary>- Summary Screen with IVs, EVs, and Nature Highlighting</summary>
 <br>
@@ -41,7 +43,7 @@ Fly and Defog will appear on the move selection screen for any Pokemon that can 
 ![HMs usable without knowing the move](previews/usable_hms.gif)
 </details>
 <details>
-<summary>- Press B to RUN in a Wild Battle</summary>
+<summary>- Double-tap B to RUN in a Wild Battle</summary>
 <br>
 
 ![press B to run in a wild battle](previews/b_to_run.gif)
