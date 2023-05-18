@@ -378,7 +378,7 @@ enum PokemonNature {
  * @param[out] buf      Buffer output, for array output.
  * @return              Result data.
  */
-u32  __attribute__((long_call)) BoxPokemon_Get(struct BoxPokemon *boxMon, enum PokemonDataField field, void *buf);
+u32  __attribute__((long_call)) BoxPokemon_Get(struct BoxPokemon *boxMon, int field, void *buf);
 
 /**
  * @brief Get data from the Pokemon structure.
@@ -390,6 +390,16 @@ u32  __attribute__((long_call)) BoxPokemon_Get(struct BoxPokemon *boxMon, enum P
  * @param[out] buf      Buffer output, for array output.
  * @return              Result data.
  */
-u32  __attribute__((long_call)) Pokemon_Get(struct Pokemon *pokemon, enum PokemonField field, void *buf);
+u32  __attribute__((long_call)) Pokemon_Get(struct Pokemon *pokemon, int field, void *buf);
+
+/**
+ * @brief Checks if a given Pokemon species + form can learn the move in a given TM.
+ * 
+ * @param[in]   species
+ * @param[in]   form
+ * @param[in]   tmID    ID of the TM in question. 0 is TM01. 92 is HM01.
+ * @return              TRUE if the Pokemon can learn the TM, FALSE otherwise.
+ */
+BOOL __attribute__((long_call)) Pokemon_CanLearnTM(u16 species, u16 form, u8 tmID);
 
 #endif // __POKEMON_H

@@ -21,4 +21,7 @@
 // Increases the HP bar drain speed in combat (~4x faster).
 #define FASTER_HP_BAR_DRAIN
 
+// Allows the use of HMs in the field so long as a Pokemon can learn it.
+#define FIELD_HMS
+
 #endif // __CONFIG_H

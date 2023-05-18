@@ -28,21 +28,13 @@ Press **R** to change to IVs, **L** to change to EVs, and **SELECT** to change t
 <summary>- Unlimited TMs</summary>
 <br>
 
-![infinite tms](previews/infinite_tms.png)
+![infinite TMs](previews/infinite_tms.png)
 </details>
 <details>
 <summary>- HM Usage Based on Possession</summary>
 <br>
 
-![](previews/usable_hms.gif)
-</details>
-<details>
-<summary>- Toggleable Autorun</summary>
-<br>
-
-Press **B** to toggle auto-run on and off.
-
-![](previews/autorun.gif)
+![HMs usable without knowing the move](previews/usable_hms.gif)
 </details>
 <details>
 <summary>- Press B to RUN in a Wild Battle</summary>
