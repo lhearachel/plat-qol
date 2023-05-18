@@ -32,3 +32,7 @@ arm9 Summary_Entry_Hook 08090A3A 1
 #ifdef FIELD_HMS
 arm9 PartyList_MakeFieldMoveMenu 080800B4 2
 #endif
+
+#ifdef MAP_B_TO_RUN_FROM_BATTLES
+0016 Battle_MapBToFlee 0226CC98 3
+#endif

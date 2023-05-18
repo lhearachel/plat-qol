@@ -24,4 +24,7 @@
 // Allows the use of HMs in the field so long as a Pokemon can learn it.
 #define FIELD_HMS
 
+// Maps a B button input on the Battle Command Selection screen to Run
+#define MAP_B_TO_RUN_FROM_BATTLES
+
 #endif // __CONFIG_H

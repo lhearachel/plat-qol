@@ -40,7 +40,7 @@ Press **R** to change to IVs, **L** to change to EVs, and **SELECT** to change t
 <summary>- Press B to RUN in a Wild Battle</summary>
 <br>
 
-![](previews/b_to_run.gif)
+![press B to run in a wild battle](previews/b_to_run.gif)
 </details>
 <details>
 <summary>- Faster HP Bar Drain</summary>
