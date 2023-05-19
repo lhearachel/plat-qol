@@ -12,29 +12,6 @@
 #define GENDER_F    1
 #define GENDER_U    2
 
-struct TrainerPokemon {
-    u16 dv;
-    u16 level;
-    u16 species;
-    u16 ballSeal;
-};
-
-struct TrainerPokemonWithMoves {
-    u16 dv;
-    u16 level;
-    u16 species;
-    u16 moves[4];
-    u16 ballSeal;
-};
-
-struct TrainerPokemonWithItem {
-    u16 dv;
-    u16 level;
-    u16 species;
-    u16 itemID;
-    u16 ballSeal;
-};
-
 static inline u8 LoadAbilityValue(int species, int form, u8 abilitySlot)
 {
     int trueSpecies = Form_CalcTrueSpecies(species, form);
@@ -54,7 +31,6 @@ void Trainer_MakePokemon(struct BattleParams *battleParams, int clientNum, int h
     Party_Init(battleParams->party[clientNum], 6);
 
     u8 *buffer = Malloc(heapID, sizeof(struct TrainerPokemonFull) * 6);
-    // void *buffer = Malloc(heapID, sizeof(struct TrainerPokemonFull) * 6);
 
     Trainer_LoadParty(battleParams->trainerIDs[clientNum], buffer);
 
