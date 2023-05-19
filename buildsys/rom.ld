@@ -8,6 +8,8 @@ PlayerItems_HaveAtLeast = 0x0207D688 | 1;
 
 /* party.h */
 Party_GetMember = 0x0207A0FC | 1;
+Party_Init = 0x0207A014 | 1;
+Party_Add = 0x0207A048 | 1;
 
 /* player.h */
 Player_Form = 0x0205EB74 | 1;
@@ -18,13 +20,28 @@ Player_CanRockClimbFromHere = 0x021E0760 | 1;
 
 /* pokemon.h */
 BoxPokemon_Get = 0x02074570 | 1;
+Pokemon_Init = 0x02073D80 | 1;
 Pokemon_Get = 0x02074470 | 1;
+Pokemon_Set = 0x02074B30 | 1;
+Pokemon_SetMoveSlot = 0x02077230 | 1;
+Pokemon_Recalc = 0x0207418C | 1;
 Pokemon_CanLearnTM = 0x02077FE4 | 1;
+Pokemon_Malloc = 0x02073C74 | 1;
+Pokemon_AssignBallSeal = 0x02078AEC | 1;
+Pokemon_GetBaseStats = 0x020759F0 | 1;
+Form_CalcTrueSpecies = 0x02078740 | 1;
 
 /* save.h */
 SaveData_GetPlayerStatus = 0x02025E38 | 1;
 SaveData_GetPlayerItems = 0x0207D990 | 1;
 PlayerStatus_CheckBadge = 0x02025F34 | 1;
+
+/* sys.h */
+RNG_Seed = 0x0201D2D0 | 1;
+RNG_SetSeed = 0x0201D2DC | 1;
+RNG_Get = 0x0201D2E8 | 1;
+Malloc = 0x02018144 | 1;
+Free = 0x020181C4 | 1;
 
 /* tile.h */
 Tile_IsPC = 0x0205DBE4 | 1;
@@ -40,6 +57,10 @@ Tile_IsWaterfall = 0x0205DDB4 | 1;
 Tile_IsMap = 0x0205DBF0 | 1;
 Tile_IsBumpPost = 0x0205DDC0 | 1;
 Tile_IsTV = 0x0205DE84 | 1;
+
+/* trainer.h */
+Trainer_LoadParty = 0x0207939C | 1;
+Trainer_Gender = 0x020793AC | 1;
 
 /* ui/party_list.h */
 PartyList_CalcMenuIDForMove = 0x02080BCC | 1;

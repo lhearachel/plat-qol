@@ -34,4 +34,20 @@ struct PartyData {
  */
 struct Pokemon* __attribute__((long_call)) Party_GetMember(struct Party *party, int pos);
 
+/**
+ * @brief Initialize a new Party with enough memory to fit a number of members.
+ * 
+ * @param[in]  party
+ * @param[in]  size     The number of members to allocate for.
+ */
+void __attribute__((long_call)) Party_Init(struct Party *party, int size);
+
+/**
+ * @brief Add a Pokemon to the party.
+ * 
+ * @param[in]   party
+ * @param[in]   pokemon
+ */
+void __attribute__((long_call)) Party_Add(struct Party *party, struct Pokemon *pokemon);
+
 #endif // __PARTY_H

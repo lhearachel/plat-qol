@@ -338,6 +338,42 @@ enum PokemonDataField {
 	MON_PARAM_END,
 };
 
+enum PersonalNARCField {
+    PERSONAL_BASE_HP = 0,
+    PERSONAL_BASE_ATTACK,
+    PERSONAL_BASE_DEFENSE,
+    PERSONAL_BASE_SPEED,
+    PERSONAL_BASE_SP_ATTACK,
+    PERSONAL_BASE_SP_DEFENSE,
+    PERSONAL_TYPE_1,
+    PERSONAL_TYPE_2,
+    PERSONAL_CATCH_RATE,
+    PERSONAL_EXP_YIELD,
+    PERSONAL_EV_YIELD_HP,
+    PERSONAL_EV_YIELD_ATTACK,
+    PERSONAL_EV_YIELD_DEFENSE,
+    PERSONAL_EV_YIELD_SPEED,
+    PERSONAL_EV_YIELD_SP_ATTACK,
+    PERSONAL_EV_YIELD_SP_DEFENSE,
+    PERSONAL_ITEM_1,
+    PERSONAL_ITEM_2,
+    PERSONAL_GENDER_RATIO,
+    PERSONAL_EGG_CYCLES,
+    PERSONAL_BASE_FRIENDSHIP,
+    PERSONAL_EXP_GROUP,
+    PERSONAL_EGG_GROUP_1,
+    PERSONAL_EGG_GROUP_2,
+    PERSONAL_ABILITY_1,
+    PERSONAL_ABILITY_2,
+    PERSONAL_RUN_CHANCE,
+    PERSONAL_BODY_COLOR,
+    PERSONAL_FLIP,
+    PERSONAL_TM_ARRAY_1,
+    PERSONAL_TM_ARRAY_2,
+    PERSONAL_TM_ARRAY_3,
+    PERSONAL_TM_ARRAY_4,
+};
+
 enum PokemonNature {
     NATURE_HARDY,
     NATURE_LONELY,
@@ -381,6 +417,20 @@ enum PokemonNature {
 u32  __attribute__((long_call)) BoxPokemon_Get(struct BoxPokemon *boxMon, int field, void *buf);
 
 /**
+ * @brief Initializes a new Pokemon structure.
+ * 
+ * @param[in,out]   pokemon
+ * @param[in]       species
+ * @param[in]       level
+ * @param[in]       ivs         Value to set for all IVs.
+ * @param[in]       rndSetFlag  If 0, will ignore any value in rnd and generate a new random value.
+ * @param[in]       rnd         Pre-set random value. Used for computing PID (and, thus, gender, nature, etc.).
+ * @param[in]       idFlag      If 0, generate new ID for the original trainer. If 1, use value from id. If 2, force the mon to not be shiny.
+ * @param[in]       id          Pre-set original trainer ID.
+ */
+void __attribute__((long_call)) Pokemon_Init(struct Pokemon *pokemon, int species, int level, int ivs, int rndSetFlag, u32 rnd, int idFlag, u32 id);
+
+/**
  * @brief Get data from the Pokemon structure.
  * 
  * Original Function: [`GetPkmnData @ 0x02074470` (ARM9)](https://github.com/JimB16/PokePlat/blob/ccbdf7ea8b08f23d3adcb6baa7d1f2b8dc24bbc1/source/arm9_pkmndata.s#L1198)
@@ -393,6 +443,31 @@ u32  __attribute__((long_call)) BoxPokemon_Get(struct BoxPokemon *boxMon, int fi
 u32  __attribute__((long_call)) Pokemon_Get(struct Pokemon *pokemon, int field, void *buf);
 
 /**
+ * @brief Set data in the Pokemon structure.
+ * 
+ * @param[in,out]   pokemon
+ * @param[in]       field   Field ID of the data to be set. See enum PokemonDataField.
+ * @param[in]       buf     Pointer to new data to assign.
+ */
+void __attribute__((long_call)) Pokemon_Set(struct Pokemon *pokemon, int field, void *buf);
+
+/**
+ * @brief Sets the move ID in a particular slot for a Pokemon.
+ * 
+ * @param[in,out]   pokemon
+ * @param[in]       moveID  ID of the move to be set.
+ * @param[in]       slot    Slot to set the move into, 0-indexed.
+ */
+void __attribute__((long_call)) Pokemon_SetMoveSlot(struct Pokemon *pokemon, u16 moveID, u8 slot);
+
+/**
+ * @brief Recalculates computed attributes for a Pokemon (e.g. stats, etc.).
+ * 
+ * @param[in,out]   pokemon
+ */
+void __attribute__((long_call)) Pokemon_Recalc(struct Pokemon *pokemon);
+
+/**
  * @brief Checks if a given Pokemon species + form can learn the move in a given TM.
  * 
  * @param[in]   species
@@ -401,5 +476,49 @@ u32  __attribute__((long_call)) Pokemon_Get(struct Pokemon *pokemon, int field, 
  * @return              TRUE if the Pokemon can learn the TM, FALSE otherwise.
  */
 BOOL __attribute__((long_call)) Pokemon_CanLearnTM(u16 species, u16 form, u8 tmID);
+
+/**
+ * @brief Allocate and return a new Pokemon struct.
+ * 
+ * @param[in]   heapID  ID of the heap which will own the struct.
+ * @return              An allocated Pokemon struct.
+ */
+struct Pokemon* __attribute__((long_call)) Pokemon_Malloc(u32 heapID);
+
+/**
+ * @brief Assign a ball seal to a Pokemon.
+ * 
+ * @param[in]       ballSeal    ID of the ball seal.
+ * @param[in,out]   pokemon
+ * @param[in]       heapID      Heap for loading the ball seal archive.
+ * @return                      TRUE if the ball seal is valid, FALSE otherwise.
+ */
+BOOL __attribute__((long_call)) Pokemon_AssignBallSeal(int ballSeal, struct Pokemon *pokemon, int heapID);
+
+/**
+ * @brief Get a data value for a species from the base stats archive.
+ * 
+ * @param[in]   species     Species ID to be retrieved. This should be the "true" species ID (see: Form_CalcTrueSpecies).
+ * @param[in]   field       ID of the data field to retrieve.
+ * @return                  Requested data value.
+ */
+u32  __attribute__((long_call)) Pokemon_GetBaseStats(int species, int field);
+
+/**
+ * @brief Calculates the "true" species of a given species + form combination.
+ * 
+ * This is used to permute forms on Pokemon with those that have separate entries
+ * in the base stats archive, i.e.:
+ *  - Deoxys (Attack, Defense, Speed forms)
+ *  - Wormadam (Sandy, Trash forms)
+ *  - Giratina (Origin form)
+ *  - Shaymin (Sky form)
+ *  - Rotom (Heat, Wash, Frost, Fan, Mow forms)
+ * 
+ * @param[in]   species     Species ID of the base form
+ * @param[in]   form        ID of the permuted form (0 being the base form)
+ * @return                  The "true" species ID
+ */
+int  __attribute__((long_call)) Form_CalcTrueSpecies(int species, int form);
 
 #endif // __POKEMON_H

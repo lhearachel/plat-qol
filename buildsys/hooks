@@ -46,3 +46,7 @@ arm9 PartyList_MakeFieldMoveMenu 080800B4 2
 #ifdef BUGFIX_BOSS_DOUBLES_MUSIC
 arm9 FieldEncounter_GetSpecialEffects 02051B50 1
 #endif
+
+#ifdef BUGFIX_TRAINER_PARTY_POKEMON
+arm9 Trainer_MakePokemon 020793B8 3
+#endif

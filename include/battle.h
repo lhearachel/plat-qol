@@ -5,6 +5,7 @@
 
 #include "party.h"
 #include "save.h"
+#include "trainer.h"
 
 #define FIGHT_TYPE_SINGLES          (0x00000000)
 #define FIGHT_TYPE_WILD             (0x00000000)
@@ -38,29 +39,13 @@
 #define CLIENT_ENEMY_PARTNER        3
 #define CLIENT_MAX                  4
 
-struct TrainerData {
-    u8      dataType;           // 0x00
-    u8      trainerClass;       // 0x01
-    u8      trainerSpriteIdx;   // 0x02
-    u8      partySize;          // 0x03
-
-    u16     bagItems[4];        // 0x04
-
-    u32     aiBitmask;          // 0x0C
-    u32     fightType;          // 0x10
-
-    u16     name[8];            // 0x14
-    u8      _winMessagePad[8];  // 0x24
-    u8      _loseMessagePad[8]; // 0x2C
-};  // size == 0x34
-
 struct BattleParams {
     u32     fightType; // 0x00
 
     struct Party *party[CLIENT_MAX];    // 0x04
 
     int     winLoseFlag;        // 0x14
-    int     trainerID[CLIENT_MAX];  // 0x18
+    int     trainerIDs[CLIENT_MAX];  // 0x18
     
     struct TrainerData  trainerData[CLIENT_MAX];    // 0x28
     struct PlayerStatus *playerStatus[CLIENT_MAX];  // 0xF8

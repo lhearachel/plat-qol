@@ -31,4 +31,12 @@
 // and music used by Gym Leaders and Elite Four members.
 #define BUGFIX_BOSS_DOUBLES_MUSIC
 
+// Fixes a bug in how vanilla Platinum loads trainer party Pokemon data
+// which does not respect form-specific base stats or permit having any
+// ability other than slot 1.
+#define BUGFIX_TRAINER_PARTY_POKEMON
+
+// Fixes the Fire Fang glitch in vanilla Platinum.
+#define BUGFIX_FIRE_FANG
+
 #endif // __CONFIG_H
