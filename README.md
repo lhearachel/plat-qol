@@ -55,6 +55,13 @@ Fly and Defog will appear on the move selection screen for any Pokemon that can 
 ![increased hp bar speed](previews/hp_bar.gif)
 </details>
 
+There are also a few bugfixes to vanilla Platinum included in this repo:
+
+- Double-battle bosses now use the correct music
+- Fire Fang no longer pierces Wonder Guard regardless of effectiveness
+- Trainer Pokemon with different forms now use the correct base stats
+- Trainer Pokemon can now have abilities other than slot 1 specified
+
 ## Setup Instructions
 
 ### Windows

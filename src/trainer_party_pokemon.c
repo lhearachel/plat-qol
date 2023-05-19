@@ -53,11 +53,11 @@ void Trainer_MakePokemon(struct BattleParams *battleParams, int clientNum, int h
 
         // IVs and ability slot are stored in a composite byte-pair.
         // The ability slot is defined by bit 8; to specify ability
-        // slot 2, for example, the DV value would be 1 + (whatever
+        // slot 2, for example, the DV value would be 256 + (whatever
         // DV value you would want otherwise).
         //
         // e.g., if you wanted ability slot 2 + 31 in all IVs, you
-        // would set DV == 1 + 255 == 256.
+        // would set DV == 256 + 255 == 511.
         u16 dv          = buffer[offset]
                         | (buffer[offset + 1] << 8); buffer += 2;
         u8  ivs         = dv & 0xFF;
