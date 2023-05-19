@@ -27,4 +27,8 @@
 // Maps a B button input on the Battle Command Selection screen to Run
 #define MAP_B_TO_RUN_FROM_BATTLES
 
+// Fixes a bug in vanilla Platinum that overrides the custom cut-in effects
+// and music used by Gym Leaders and Elite Four members.
+#define BUGFIX_BOSS_DOUBLES_MUSIC
+
 #endif // __CONFIG_H

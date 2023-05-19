@@ -42,3 +42,7 @@ arm9 PartyList_MakeFieldMoveMenu 080800B4 2
 #ifdef MAP_B_TO_RUN_FROM_BATTLES
 0016 Battle_MapBToFlee 0226CC98 3
 #endif
+
+#ifdef BUGFIX_BOSS_DOUBLES_MUSIC
+arm9 FieldEncounter_GetSpecialEffects 02051B50 1
+#endif

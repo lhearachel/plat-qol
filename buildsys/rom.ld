@@ -1,3 +1,7 @@
+/* battle.h */
+FieldEncounter_GetTrainerSpecialEffects = 0x02051C20 | 1;
+FieldEncounter_GetPokemonSpecialEffects = 0x02051CD0 | 1;
+
 /* item.h */
 Item_IsMail = 0x0207D2D0 | 1;
 PlayerItems_HaveAtLeast = 0x0207D688 | 1;
