@@ -93,12 +93,8 @@ u32 FieldEncounter_GetSpecialEffects(const struct BattleParams *battleParams)
 
         if (fightType & FIGHT_TYPE_DOUBLES) {
             if (IsSpecialTrainer(effectsIdx)) {
-                // Special case: Volkner + Flint doubles fight in postgame
-                if (effectsIdx == SPFX_VOLKNER) {
-                    u32 partnerFx = FieldEncounter_GetTrainerSpecialEffects(battleParams->trainerData[CLIENT_ENEMY_PARTNER].trainerClass);
-                    if (partnerFx == SPFX_FLINT) {
-                        return SPFX_TAG_BATTLE_BOSS;
-                    }
+                if (fightType & FIGHT_TYPE_AI_TWO_ENEMIES) {
+                    return SPFX_TAG_BATTLE_BOSS;
                 }
 
                 return effectsIdx;
