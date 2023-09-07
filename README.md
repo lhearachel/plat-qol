@@ -1,5 +1,7 @@
 # Platinum QOL Features
 
+***NOTE:*** This repository is deprecated; I highly recommend not making use of it, as it breaks the evolution sequence for unknown reasons.
+
 This repository contains a host of QOL features that can be applied to Pokemon Platinum via C injection. Code written herein is based on the US version of Pokemon Platinum, specifically Rev 1.
 
 This repository is also structured to be extensible as a C injection template with the requisite infrastructure already set up for an aspiring hacker.
